@@ -21,9 +21,54 @@ map.on('click', (event) => {
   document.querySelector('[name=lat]').value = lat;
   document.querySelector('[name=lng]').value = lng;
 
-  //remove icon
+  // remove icon
   marker && map.removeLayer(marker);
 
-  //add icon layer
+  // add icon layer
   marker = L.marker([lat, lng], { icon }).addTo(map);
 });
+
+// add photo field
+function addPhotoField() {
+  //select images container
+  const container = document.querySelector('#images');
+
+  //select all upload fields
+  const fieldsContainer = document.querySelectorAll('.new-upload');
+
+  //clone last upload field
+  const newFieldContainer = fieldsContainer[
+    fieldsContainer.length - 1
+  ].cloneNode(true);
+
+  //verify if the upload field is empty
+  const input = newFieldContainer.children[0];
+
+  if (input.value == '') {
+    return;
+  }
+
+  //clean upload field value
+  newFieldContainer.children[0].value = '';
+
+  //add a new upload field
+  container.appendChild(newFieldContainer);
+}
+
+//remove photo field
+function deleteField(event) {
+  //get the current target
+  const span = event.currentTarget;
+
+  //select all upload fields and verify if there is 1 or more
+  const fieldsContainer = document.querySelectorAll('.new-upload');
+
+  if (fieldsContainer.length < 2) {
+    //clean upload field value
+    span.parentNode.children[0].value = '';
+    return;
+  }
+
+  //delete a field
+  span.parentNode.remove();
+}
