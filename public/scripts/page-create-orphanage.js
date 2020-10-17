@@ -1,10 +1,10 @@
-// create map
+// criar mapa
 const map = L.map('mapid').setView([-8.0543953, -34.898379], 15);
 
-// create and add tile layer
+// criar e adicionar tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-// create icon
+// criar icone
 const icon = L.icon({
   iconUrl: '/images/map-marker.svg',
   iconSize: [58, 68],
@@ -13,7 +13,7 @@ const icon = L.icon({
 
 let marker;
 
-// create and add marker
+// criar e adicionar marcador
 map.on('click', (event) => {
   const lat = event.latlng.lat;
   const lng = event.latlng.lng;
@@ -21,46 +21,46 @@ map.on('click', (event) => {
   document.querySelector('[name=lat]').value = lat;
   document.querySelector('[name=lng]').value = lng;
 
-  // remove icon
+  // remmove o icon
   marker && map.removeLayer(marker);
 
-  // add icon layer
+  // adicionada a layer do icon
   marker = L.marker([lat, lng], { icon }).addTo(map);
 });
 
-// add photo field
+// add campo de foto
 function addPhotoField() {
-  // select images container
+  // seleciona o container images
   const container = document.querySelector('#images');
 
-  // select all upload fields
+  // seleciona todos os containers de upload
   const fieldsContainer = document.querySelectorAll('.new-upload');
 
-  // clone last upload field
+  // clona o ultimo upload container
   const newFieldContainer = fieldsContainer[
     fieldsContainer.length - 1
   ].cloneNode(true);
 
-  // verify if the upload field is empty
+  // verifica se o campo está vazio
   const input = newFieldContainer.children[0];
 
   if (input.value == '') {
     return;
   }
 
-  // clean upload field value
+  // limpa o campo
   newFieldContainer.children[0].value = '';
 
-  // add a new upload field
+  // adiciona um novo campo
   container.appendChild(newFieldContainer);
 }
 
-// remove photo field
+// remover um campo de foto
 function deleteField(event) {
-  // get the current target
+  // guarda o current
   const span = event.currentTarget;
 
-  // select all upload fields and verify if there is 1 or more
+  // seleciona todos os campos de upload e verifica a quantidade
   const fieldsContainer = document.querySelectorAll('.new-upload');
 
   if (fieldsContainer.length < 2) {
@@ -69,23 +69,35 @@ function deleteField(event) {
     return;
   }
 
-  // delete a field
+  // deleta o campo
   span.parentNode.remove();
 }
 
-//select yes or no
+//selecionar sim ou não
 function toggleSelect(event) {
-  //remove .active from buttons
+  //remove .active de buttons
   document
     .querySelectorAll('.button-select button')
     .forEach(button => button.classList.remove('active'));
 
-  //add .active to this button
+  //adiciona o .active para este botão
   const button = event.currentTarget;
   button.classList.add('active');
 
-  //update the hidden input value
+  //atualiza o valor do hidden input
   const input = document.querySelector('[name="open_on_weekends"]');
 
   input.value = button.dataset.value;
+}
+
+//validar se lat e lng estão preenchidos
+function validate(event){
+  
+  const lat = document.querySelector('[name=lat]').value;
+  const lng = document.querySelector('[name=lng]').value;
+
+ if (lat == '' && lng == '') {
+   event.preventDefault();
+   alert('Selecione um ponto no mapa');
+ }
 }
