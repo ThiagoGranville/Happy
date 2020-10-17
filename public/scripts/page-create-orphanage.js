@@ -78,7 +78,7 @@ function toggleSelect(event) {
   //remove .active from buttons
   document
     .querySelectorAll('.button-select button')
-    .forEach((button) => button.classList.remove('active'));
+    .forEach(button => button.classList.remove('active'));
 
   //add .active to this button
   const button = event.currentTarget;

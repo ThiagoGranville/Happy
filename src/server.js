@@ -10,7 +10,7 @@ server
   // utilizando arquivos estaticos
   .use(express.static('public'))
 
-  //configurar template engine
+  // configurar template engine
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'hbs')
 
@@ -22,3 +22,4 @@ server
 
 // ligar o servidor
 server.listen(5500);
+
